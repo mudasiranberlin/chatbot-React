@@ -1,0 +1,3084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foodie - Food Delivery App</title>
+
+<style>
+/* =========================================================
+   RESET
+========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --orange: #f45120;
+    --orange-dark: #df3e10;
+    --orange-light: #fff0e9;
+    --cream: #faf8f5;
+    --white: #ffffff;
+    --black: #171717;
+    --gray: #777;
+    --light-gray: #eeeeee;
+    --border: #e9e9e9;
+    --green: #38a169;
+    --red: #ef4444;
+    --shadow: 0 8px 30px rgba(0,0,0,.08);
+    --radius: 18px;
+}
+
+body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 Roboto, Arial, sans-serif;
+    background: #dedede;
+    color: var(--black);
+}
+
+/* =========================================================
+   APP CONTAINER
+========================================================= */
+.app {
+    width: 100%;
+    max-width: 430px;
+    min-height: 100vh;
+    margin: auto;
+    background: var(--cream);
+    position: relative;
+    overflow-x: hidden;
+}
+
+@media (min-width: 600px) {
+    body {
+        padding: 25px;
+    }
+
+    .app {
+        min-height: 850px;
+        border-radius: 28px;
+        box-shadow: 0 20px 70px rgba(0,0,0,.2);
+    }
+}
+
+/* =========================================================
+   SCREENS
+========================================================= */
+.screen {
+    display: none;
+    min-height: 100vh;
+    padding-bottom: 90px;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* =========================================================
+   SPLASH
+========================================================= */
+.splash {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 30px 24px 38px;
+    overflow: hidden;
+    color: white;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.15),
+            rgba(0,0,0,.85)
+        ),
+        linear-gradient(135deg, #4d2b17, #9b4d1d 45%, #26170f);
+}
+
+.food-hero {
+    position: absolute;
+    top: 120px;
+    left: 30px;
+    right: 30px;
+    height: 360px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 50% 45%, #ffbd55 0 10%, transparent 11%),
+        radial-gradient(circle at 30% 55%, #e44720 0 7%, transparent 8%),
+        radial-gradient(circle at 70% 60%, #e44720 0 7%, transparent 8%),
+        radial-gradient(circle at 45% 75%, #56a33a 0 6%, transparent 7%),
+        radial-gradient(circle at 65% 35%, #3c8e34 0 5%, transparent 6%),
+        linear-gradient(145deg,#d86b22,#8d3517);
+    box-shadow:
+        inset 0 -40px 70px rgba(0,0,0,.35),
+        0 25px 60px rgba(0,0,0,.35);
+    transform: rotate(-5deg);
+}
+
+.food-hero::after {
+    content: "🍗";
+    position: absolute;
+    font-size: 170px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%) rotate(-12deg);
+    filter: drop-shadow(0 18px 15px rgba(0,0,0,.3));
+}
+
+.splash-content {
+    position: relative;
+    z-index: 2;
+}
+
+.logo-chef {
+    font-size: 45px;
+    text-align: center;
+    margin-bottom: -5px;
+}
+
+.splash-logo {
+    font-size: 48px;
+    font-weight: 300;
+    font-family: cursive;
+    text-align: center;
+}
+
+.tagline {
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 35px;
+    opacity: .9;
+}
+
+.btn {
+    border: none;
+    border-radius: 30px;
+    padding: 16px 20px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    transition: .2s;
+}
+
+.btn:active {
+    transform: scale(.98);
+}
+
+.btn-primary {
+    background: var(--orange);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--orange-dark);
+}
+
+.btn-outline {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    margin-top: 12px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+.header {
+    padding: 48px 20px 15px;
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.location {
+    font-size: 13px;
+    color: var(--gray);
+}
+
+.location strong {
+    color: var(--black);
+    display: block;
+    margin-top: 3px;
+    font-size: 14px;
+}
+
+.header-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    cursor: pointer;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+.search-box {
+    height: 48px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    margin-top: 16px;
+    gap: 10px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+    background: transparent;
+}
+
+/* =========================================================
+   HOME BANNER
+========================================================= */
+.banner {
+    margin: 8px 20px 20px;
+    min-height: 135px;
+    border-radius: 18px;
+    padding: 20px;
+    color: white;
+    overflow: hidden;
+    position: relative;
+    background:
+        linear-gradient(100deg, rgba(30,20,15,.95), rgba(50,30,15,.45)),
+        linear-gradient(135deg,#8a3f18,#d96a1b);
+}
+
+.banner h2 {
+    width: 55%;
+    font-size: 19px;
+    line-height: 1.2;
+}
+
+.banner p {
+    width: 55%;
+    font-size: 11px;
+    opacity: .8;
+    margin-top: 6px;
+}
+
+.banner button {
+    background: var(--orange);
+    color: white;
+    border: none;
+    padding: 9px 15px;
+    border-radius: 20px;
+    font-size: 11px;
+    margin-top: 12px;
+}
+
+.banner-food {
+    position: absolute;
+    right: -15px;
+    top: 15px;
+    font-size: 100px;
+    transform: rotate(-10deg);
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+.section {
+    padding: 0 20px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0 13px;
+}
+
+.section-title h3 {
+    font-size: 17px;
+}
+
+.section-title span {
+    font-size: 12px;
+    color: var(--orange);
+    cursor: pointer;
+}
+
+/* =========================================================
+   CATEGORIES
+========================================================= */
+.categories {
+    display: flex;
+    gap: 13px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.categories::-webkit-scrollbar {
+    display: none;
+}
+
+.category {
+    min-width: 65px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.category-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #fff3ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-size: 25px;
+}
+
+.category span {
+    font-size: 10px;
+    margin-top: 6px;
+    display: block;
+    color: #555;
+}
+
+/* =========================================================
+   RESTAURANTS
+========================================================= */
+.restaurant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.restaurant-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+}
+
+.food-image {
+    height: 105px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.food-image.orange {
+    background: linear-gradient(135deg,#a8491e,#ef8b31);
+}
+
+.food-image.green {
+    background: linear-gradient(135deg,#345d2b,#88ad3d);
+}
+
+.food-image.red {
+    background: linear-gradient(135deg,#682216,#df5728);
+}
+
+.food-image.yellow {
+    background: linear-gradient(135deg,#7a501b,#e6a83e);
+}
+
+.food-emoji {
+    font-size: 75px;
+    filter: drop-shadow(0 8px 8px rgba(0,0,0,.3));
+}
+
+.heart {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.heart.active {
+    color: var(--red);
+}
+
+.restaurant-info {
+    padding: 10px;
+}
+
+.restaurant-info h4 {
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.restaurant-meta {
+    font-size: 9px;
+    color: var(--gray);
+}
+
+.rating {
+    color: #f5a623;
+}
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(430px,100%);
+    height: 70px;
+    background: rgba(255,255,255,.97);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+}
+
+.nav-item {
+    text-align: center;
+    font-size: 10px;
+    color: #999;
+    cursor: pointer;
+    width: 20%;
+}
+
+.nav-item .nav-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.nav-item.active {
+    color: var(--orange);
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+.page-header {
+    padding: 45px 20px 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.back {
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.page-header h2 {
+    font-size: 20px;
+}
+
+/* =========================================================
+   RESTAURANT PAGE
+========================================================= */
+.restaurant-cover {
+    height: 205px;
+    position: relative;
+    background:
+        linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.4)),
+        linear-gradient(135deg,#51321e,#bb6833);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.restaurant-cover::before {
+    content: "🍕";
+    font-size: 170px;
+    filter: drop-shadow(0 20px 15px rgba(0,0,0,.35));
+}
+
+.cover-actions {
+    position: absolute;
+    top: 48px;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cover-actions span {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.restaurant-title {
+    padding: 18px 20px 10px;
+    background: white;
+}
+
+.restaurant-title h2 {
+    font-size: 20px;
+}
+
+.restaurant-details {
+    display: flex;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 8px;
+}
+
+.tabs {
+    display: flex;
+    gap: 22px;
+    padding: 15px 20px 5px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+}
+
+.tab {
+    font-size: 13px;
+    color: #888;
+    padding-bottom: 10px;
+    cursor: pointer;
+}
+
+.tab.active {
+    color: var(--orange);
+    border-bottom: 2px solid var(--orange);
+}
+
+.menu-categories {
+    display: flex;
+    gap: 10px;
+    padding: 15px 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.menu-categories::-webkit-scrollbar {
+    display: none;
+}
+
+.menu-cat {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 9px 17px;
+    border-radius: 20px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.menu-cat.active {
+    background: var(--orange);
+    color: white;
+    border-color: var(--orange);
+}
+
+.menu-item {
+    background: white;
+    margin: 8px 20px;
+    padding: 10px;
+    border-radius: 15px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border: 1px solid var(--border);
+}
+
+.menu-item-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    background: linear-gradient(135deg,#853d20,#e98b36);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    flex-shrink: 0;
+}
+
+.menu-item-content {
+    flex: 1;
+}
+
+.menu-item h4 {
+    font-size: 13px;
+}
+
+.menu-item p {
+    font-size: 10px;
+    color: #888;
+    margin: 4px 0;
+}
+
+.price {
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.add-btn {
+    width: 29px;
+    height: 29px;
+    border-radius: 50%;
+    border: none;
+    background: var(--orange);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* =========================================================
+   PRODUCT DETAILS
+========================================================= */
+.product-image {
+    height: 300px;
+    background:
+        radial-gradient(circle,#ed8c30,#7b3319);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.product-image .big-food {
+    font-size: 190px;
+    filter: drop-shadow(0 20px 20px rgba(0,0,0,.35));
+}
+
+.product-info {
+    background: white;
+    border-radius: 25px 25px 0 0;
+    margin-top: -25px;
+    position: relative;
+    padding: 22px 20px 100px;
+}
+
+.product-name-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-name-row h2 {
+    font-size: 21px;
+}
+
+.product-price {
+    color: var(--orange);
+    font-weight: 700;
+}
+
+.description {
+    color: #777;
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 8px 0 18px;
+}
+
+.option-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 16px 0 10px;
+}
+
+.size-options {
+    display: flex;
+    gap: 8px;
+}
+
+.size {
+    flex: 1;
+    border: 1px solid var(--border);
+    padding: 12px 5px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.size.active {
+    border-color: var(--orange);
+    background: #fff2ec;
+    color: var(--orange);
+}
+
+.extra {
+    display: flex;
+    justify-content: space-between;
+    padding: 11px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+}
+
+.extra input {
+    accent-color: var(--orange);
+}
+
+.product-bottom {
+    position: fixed;
+    bottom: 0;
+    width: min(430px,100%);
+    background: white;
+    padding: 12px 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 50;
+    border-top: 1px solid var(--border);
+}
+
+.qty {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.qty button {
+    border: none;
+    background: white;
+    width: 32px;
+    height: 42px;
+    cursor: pointer;
+}
+
+.qty span {
+    width: 28px;
+    text-align: center;
+    font-size: 13px;
+}
+
+/* =========================================================
+   CART
+========================================================= */
+.cart-list {
+    padding: 5px 20px;
+}
+
+.cart-item {
+    background: white;
+    padding: 10px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+}
+
+.cart-food {
+    width: 58px;
+    height: 58px;
+    background: linear-gradient(135deg,#833719,#e37a2b);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 38px;
+}
+
+.cart-info {
+    flex: 1;
+}
+
+.cart-info h4 {
+    font-size: 12px;
+}
+
+.cart-info p {
+    font-size: 10px;
+    color: #888;
+    margin-top: 3px;
+}
+
+.cart-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cart-controls button {
+    border: 1px solid var(--border);
+    background: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.summary {
+    margin: 20px;
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 8px 0;
+    color: #777;
+}
+
+.summary-row.total {
+    color: var(--black);
+    font-weight: 700;
+    font-size: 16px;
+    border-top: 1px solid var(--border);
+    margin-top: 7px;
+    padding-top: 14px;
+}
+
+.checkout-btn {
+    margin: 0 20px;
+}
+
+/* =========================================================
+   ORDERS
+========================================================= */
+.order-tabs {
+    margin: 0 20px 15px;
+    display: flex;
+    background: white;
+    border-radius: 22px;
+    padding: 4px;
+}
+
+.order-tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    font-size: 11px;
+    border-radius: 18px;
+    cursor: pointer;
+}
+
+.order-tab.active {
+    background: var(--orange);
+    color: white;
+}
+
+.order-card {
+    margin: 10px 20px;
+    background: white;
+    border-radius: 15px;
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+    border: 1px solid var(--border);
+}
+
+.order-image {
+    width: 65px;
+    height: 65px;
+    border-radius: 10px;
+    background: linear-gradient(135deg,#813b1e,#e47e2c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 43px;
+}
+
+.order-content {
+    flex: 1;
+}
+
+.order-content h4 {
+    font-size: 12px;
+}
+
+.order-content p {
+    color: #777;
+    font-size: 10px;
+    margin: 4px 0;
+}
+
+.delivered {
+    color: var(--green);
+    font-size: 10px;
+    font-weight: 600;
+}
+
+/* =========================================================
+   TRACKING
+========================================================= */
+.map {
+    margin: 0 20px;
+    height: 310px;
+    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+    background:
+        linear-gradient(25deg,transparent 48%,#fff 49%,#fff 52%,transparent 53%),
+        linear-gradient(115deg,transparent 48%,#fff 49%,#fff 52%,transparent 53%),
+        #dbe8d3;
+    background-size: 90px 90px;
+}
+
+.road {
+    position: absolute;
+    width: 150%;
+    height: 28px;
+    background: #fff;
+    transform: rotate(-30deg);
+    top: 130px;
+    left: -50px;
+}
+
+.pin {
+    position: absolute;
+    font-size: 35px;
+}
+
+.pin.restaurant {
+    top: 75px;
+    right: 75px;
+}
+
+.pin.customer {
+    bottom: 70px;
+    left: 70px;
+}
+
+.driver-card {
+    margin: 15px 20px;
+    background: white;
+    border-radius: 15px;
+    padding: 14px;
+}
+
+.driver-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.driver-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #c5a37d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+
+.driver-info {
+    flex: 1;
+}
+
+.driver-info h4 {
+    font-size: 13px;
+}
+
+.driver-info p {
+    font-size: 10px;
+    color: #777;
+}
+
+.driver-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.driver-actions button {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: #fff0e9;
+    color: var(--orange);
+}
+
+.progress {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.progress::before {
+    content: "";
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    top: 8px;
+    height: 3px;
+    background: #ddd;
+}
+
+.progress-step {
+    width: 25%;
+    text-align: center;
+    position: relative;
+    font-size: 8px;
+    color: #888;
+}
+
+.progress-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ddd;
+    margin: auto auto 6px;
+    position: relative;
+    z-index: 2;
+}
+
+.progress-step.done .progress-dot,
+.progress-step.active .progress-dot {
+    background: var(--orange);
+}
+
+.progress-step.done,
+.progress-step.active {
+    color: var(--black);
+}
+
+/* =========================================================
+   FAVORITES
+========================================================= */
+.favorite-card {
+    margin: 10px 20px;
+    padding: 10px;
+    background: white;
+    border-radius: 15px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border: 1px solid var(--border);
+}
+
+.favorite-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    background: linear-gradient(135deg,#7c391e,#e58a36);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+}
+
+.favorite-info {
+    flex: 1;
+}
+
+.favorite-info h4 {
+    font-size: 13px;
+}
+
+.favorite-info p {
+    font-size: 10px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.favorite-heart {
+    color: var(--red);
+    font-size: 20px;
+}
+
+/* =========================================================
+   PROFILE
+========================================================= */
+.profile-top {
+    text-align: center;
+    padding: 25px 20px;
+}
+
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+    margin: auto;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#d99d75,#8d553d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+    border: 4px solid white;
+    box-shadow: var(--shadow);
+}
+
+.profile-top h2 {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.profile-top p {
+    color: #888;
+    font-size: 11px;
+}
+
+.edit-btn {
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 18px;
+    padding: 7px 14px;
+    font-size: 10px;
+    margin-top: 8px;
+}
+
+.profile-stats {
+    background: white;
+    display: flex;
+    margin: 0 20px 15px;
+    border-radius: 15px;
+    padding: 16px 5px;
+}
+
+.stat {
+    flex: 1;
+    text-align: center;
+    border-right: 1px solid var(--border);
+}
+
+.stat:last-child {
+    border: none;
+}
+
+.stat strong {
+    display: block;
+    font-size: 16px;
+}
+
+.stat span {
+    font-size: 9px;
+    color: #888;
+}
+
+.profile-menu {
+    margin: 0 20px;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.profile-menu-item {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.profile-menu-item:last-child {
+    border: none;
+}
+
+.profile-menu-item span:first-child {
+    width: 25px;
+    color: var(--orange);
+}
+
+.profile-menu-item span:last-child {
+    margin-left: auto;
+    color: #aaa;
+}
+
+.logout {
+    margin: 20px;
+    width: calc(100% - 40px);
+    background: white;
+    color: var(--orange);
+    border: 1px solid var(--orange);
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+.toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translate(-50%,20px);
+    background: #222;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 25px;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+    z-index: 999;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%,0);
+}
+
+/* =========================================================
+   CHECKOUT MODAL
+========================================================= */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    display: none;
+    align-items: flex-end;
+    z-index: 500;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    width: min(430px,100%);
+    margin: auto auto 0;
+    border-radius: 25px 25px 0 0;
+    padding: 25px 20px;
+    animation: slideUp .25s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.modal-content h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.address-box {
+    background: #fafafa;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.payment {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+}
+
+/* =========================================================
+   DESKTOP PREVIEW
+========================================================= */
+@media (min-width: 900px) {
+    .app {
+        max-width: 430px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- =====================================================
+     SPLASH SCREEN
+===================================================== -->
+<section id="splash" class="screen active splash">
+
+    <div class="food-hero"></div>
+
+    <div class="splash-content">
+
+        <div class="logo-chef">👨‍🍳</div>
+
+        <div class="splash-logo">Foodie</div>
+
+        <div class="tagline">
+            Good Food&nbsp;&nbsp; Good Mood
+        </div>
+
+        <button class="btn btn-primary" onclick="showScreen('home')">
+            Get Started
+        </button>
+
+        <button class="btn btn-outline" onclick="showScreen('home')">
+            Log In
+        </button>
+
+    </div>
+</section>
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+<section id="home" class="screen">
+
+    <header class="header">
+
+        <div class="header-row">
+
+            <div class="location">
+                📍 Lahore, Pakistan
+                <strong>Deliver to Home⌄</strong>
+            </div>
+
+            <div class="header-icon">
+                🔔
+            </div>
+
+        </div>
+
+        <div class="search-box">
+            🔍
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search for restaurants, cuisines..."
+                oninput="searchFood()"
+            >
+        </div>
+
+    </header>
+
+
+    <div class="banner">
+
+        <h2>Delicious Food<br>Delivered To You</h2>
+
+        <p>
+            Fresh · Fast · Tasty
+        </p>
+
+        <button onclick="showScreen('restaurant')">
+            Order Now
+        </button>
+
+        <div class="banner-food">🍗</div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="section-title">
+            <h3>Categories</h3>
+        </div>
+
+        <div class="categories">
+
+            <div class="category" onclick="filterCategory('Pizza')">
+                <div class="category-icon">🍕</div>
+                <span>Pizza</span>
+            </div>
+
+            <div class="category" onclick="filterCategory('Burgers')">
+                <div class="category-icon">🍔</div>
+                <span>Burgers</span>
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🍜</div>
+                <span>Chinese</span>
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🍛</div>
+                <span>Desi</span>
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🍖</div>
+                <span>BBQ</span>
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🍝</div>
+                <span>Italian</span>
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🍰</div>
+                <span>Desserts</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="section-title">
+            <h3>Popular Restaurants</h3>
+            <span>See All ›</span>
+        </div>
+
+        <div class="restaurant-grid">
+
+            <div class="restaurant-card"
+                 data-name="The Pizza House"
+                 onclick="showScreen('restaurant')">
+
+                <div class="food-image orange">
+                    <div class="heart"
+                         onclick="toggleHeart(event,this)">
+                        ♡
+                    </div>
+                    <div class="food-emoji">🍕</div>
+                </div>
+
+                <div class="restaurant-info">
+                    <h4>The Pizza House</h4>
+
+                    <div class="restaurant-meta">
+                        <span class="rating">★ 4.5</span>
+                        (1.2k)
+                    </div>
+
+                    <div class="restaurant-meta">
+                        🍕 Italian · Pizza
+                    </div>
+
+                    <div class="restaurant-meta">
+                        ⏱ 30-40 min
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="restaurant-card"
+                 data-name="Biryani Factory">
+
+                <div class="food-image green">
+
+                    <div class="heart"
+                         onclick="toggleHeart(event,this)">
+                        ♡
+                    </div>
+
+                    <div class="food-emoji">🍛</div>
+
+                </div>
+
+                <div class="restaurant-info">
+
+                    <h4>Biryani Factory</h4>
+
+                    <div class="restaurant-meta">
+                        <span class="rating">★ 4.6</span>
+                        (842)
+                    </div>
+
+                    <div class="restaurant-meta">
+                        🍛 Desi · Pakistani
+                    </div>
+
+                    <div class="restaurant-meta">
+                        ⏱ 25-35 min
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESTAURANT
+===================================================== -->
+<section id="restaurant" class="screen">
+
+    <div class="restaurant-cover">
+
+        <div class="cover-actions">
+
+            <span onclick="showScreen('home')">
+                ←
+            </span>
+
+            <span onclick="toggleFavoriteRestaurant(this)">
+                ♡
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="restaurant-title">
+
+        <h2>The Pizza House</h2>
+
+        <div class="restaurant-details">
+            <span>⭐ 4.5 (1.2k reviews)</span>
+            <span>🍕 Italian</span>
+            <span>⏱ 30-40 min</span>
+        </div>
+
+        <div class="restaurant-details">
+            📍 Rs. 200 for two
+        </div>
+
+    </div>
+
+
+    <div class="tabs">
+
+        <div class="tab active">
+            Menu
+        </div>
+
+        <div class="tab">
+            Reviews
+        </div>
+
+        <div class="tab">
+            About
+        </div>
+
+    </div>
+
+
+    <div class="menu-categories">
+
+        <div class="menu-cat active">
+            Pizzas
+        </div>
+
+        <div class="menu-cat">
+            Burgers
+        </div>
+
+        <div class="menu-cat">
+            Pastas
+        </div>
+
+        <div class="menu-cat">
+            Sides
+        </div>
+
+    </div>
+
+
+    <div id="menuItems">
+
+        <div class="menu-item"
+             onclick="showProduct('Margherita Pizza',950,'🍕')">
+
+            <div class="menu-item-image">
+                🍕
+            </div>
+
+            <div class="menu-item-content">
+
+                <h4>Margherita Pizza</h4>
+
+                <p>
+                    Classic cheese & tomato sauce
+                </p>
+
+                <div class="price">
+                    Rs. 950
+                </div>
+
+            </div>
+
+            <button class="add-btn"
+                    onclick="event.stopPropagation();addQuickItem('Margherita Pizza',950,'🍕')">
+                +
+            </button>
+
+        </div>
+
+
+        <div class="menu-item"
+             onclick="showProduct('Pepperoni Pizza',1150,'🍕')">
+
+            <div class="menu-item-image">
+                🍕
+            </div>
+
+            <div class="menu-item-content">
+
+                <h4>Pepperoni Pizza</h4>
+
+                <p>
+                    With spicy pepperoni
+                </p>
+
+                <div class="price">
+                    Rs. 1,150
+                </div>
+
+            </div>
+
+            <button class="add-btn"
+                    onclick="event.stopPropagation();addQuickItem('Pepperoni Pizza',1150,'🍕')">
+                +
+            </button>
+
+        </div>
+
+
+        <div class="menu-item"
+             onclick="showProduct('BBQ Chicken Pizza',1250,'🍗')">
+
+            <div class="menu-item-image">
+                🍗
+            </div>
+
+            <div class="menu-item-content">
+
+                <h4>BBQ Chicken Pizza</h4>
+
+                <p>
+                    Smoky BBQ sauce & chicken
+                </p>
+
+                <div class="price">
+                    Rs. 1,250
+                </div>
+
+            </div>
+
+            <button class="add-btn"
+                    onclick="event.stopPropagation();addQuickItem('BBQ Chicken Pizza',1250,'🍗')">
+                +
+            </button>
+
+        </div>
+
+
+        <div class="menu-item"
+             onclick="showProduct('Vegetable Pizza',1050,'🥦')">
+
+            <div class="menu-item-image">
+                🥦
+            </div>
+
+            <div class="menu-item-content">
+
+                <h4>Vegetable Pizza</h4>
+
+                <p>
+                    Fresh veggies & cheese
+                </p>
+
+                <div class="price">
+                    Rs. 1,050
+                </div>
+
+            </div>
+
+            <button class="add-btn"
+                    onclick="event.stopPropagation();addQuickItem('Vegetable Pizza',1050,'🥦')">
+                +
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PRODUCT
+===================================================== -->
+<section id="product" class="screen">
+
+    <div class="product-image">
+
+        <div
+            class="cover-actions"
+            style="top:20px;"
+        >
+
+            <span onclick="showScreen('restaurant')">
+                ←
+            </span>
+
+            <span onclick="toggleFavoriteRestaurant(this)">
+                ♡
+            </span>
+
+        </div>
+
+        <div class="big-food" id="productEmoji">
+            🍕
+        </div>
+
+    </div>
+
+
+    <div class="product-info">
+
+        <div class="product-name-row">
+
+            <div>
+                <h2 id="productName">
+                    Margherita Pizza
+                </h2>
+
+                <div class="restaurant-details">
+                    🍕 Hot (300g)
+                </div>
+            </div>
+
+            <div class="product-price"
+                 id="productPrice">
+                Rs. 950
+            </div>
+
+        </div>
+
+
+        <p class="description">
+            Classic pizza with fresh mozzarella cheese,
+            tomato sauce and basil leaves.
+        </p>
+
+
+        <div class="option-title">
+            Size
+        </div>
+
+        <div class="size-options">
+
+            <div class="size"
+                 onclick="selectSize(this,750)">
+                Small<br>
+                <small>(8 inch)</small>
+            </div>
+
+            <div class="size active"
+                 onclick="selectSize(this,950)">
+                Medium<br>
+                <small>(10 inch)</small>
+            </div>
+
+            <div class="size"
+                 onclick="selectSize(this,1150)">
+                Large<br>
+                <small>(12 inch)</small>
+            </div>
+
+        </div>
+
+
+        <div class="option-title">
+            Add Extra
+        </div>
+
+        <label class="extra">
+            <span>
+                <input type="checkbox"
+                       onchange="extraChanged(this,150)">
+                Extra Cheese
+            </span>
+            <span>+ Rs. 150</span>
+        </label>
+
+        <label class="extra">
+            <span>
+                <input type="checkbox"
+                       onchange="extraChanged(this,100)">
+                Olives
+            </span>
+            <span>+ Rs. 100</span>
+        </label>
+
+        <label class="extra">
+            <span>
+                <input type="checkbox"
+                       onchange="extraChanged(this,100)">
+                Mushrooms
+            </span>
+            <span>+ Rs. 100</span>
+        </label>
+
+        <label class="extra">
+            <span>
+                <input type="checkbox"
+                       onchange="extraChanged(this,80)">
+                Capsicum
+            </span>
+            <span>+ Rs. 80</span>
+        </label>
+
+    </div>
+
+
+    <div class="product-bottom">
+
+        <div class="qty">
+
+            <button onclick="changeProductQty(-1)">
+                −
+            </button>
+
+            <span id="productQty">
+                1
+            </span>
+
+            <button onclick="changeProductQty(1)">
+                +
+            </button>
+
+        </div>
+
+        <button class="btn btn-primary"
+                onclick="addProductToCart()">
+            Add to Cart
+            <span id="productButtonPrice">
+                Rs. 950
+            </span>
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CART
+===================================================== -->
+<section id="cart" class="screen">
+
+    <div class="page-header">
+
+        <div class="back" onclick="showScreen('home')">
+            ←
+        </div>
+
+        <h2>Your Cart</h2>
+
+    </div>
+
+
+    <div class="cart-list" id="cartList">
+
+        <div class="cart-item">
+
+            <div class="cart-food">
+                🍕
+            </div>
+
+            <div class="cart-info">
+
+                <h4>Margherita Pizza</h4>
+
+                <p>Medium</p>
+
+                <strong>
+                    Rs. <span class="cart-price">950</span>
+                </strong>
+
+            </div>
+
+            <div class="cart-controls">
+
+                <button onclick="changeCart(-1)">
+                    −
+                </button>
+
+                <span id="cartQty">
+                    1
+                </span>
+
+                <button onclick="changeCart(1)">
+                    +
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="cart-item">
+
+            <div class="cart-food">
+                🍔
+            </div>
+
+            <div class="cart-info">
+
+                <h4>Chicken Burger</h4>
+
+                <p>With fries</p>
+
+                <strong>Rs. 780</strong>
+
+            </div>
+
+            <div class="cart-controls">
+
+                <button>−</button>
+                <span>1</span>
+                <button>+</button>
+
+            </div>
+
+        </div>
+
+
+        <div class="cart-item">
+
+            <div class="cart-food">
+                🥤
+            </div>
+
+            <div class="cart-info">
+
+                <h4>Coke</h4>
+
+                <p>500 ml</p>
+
+                <strong>Rs. 150</strong>
+
+            </div>
+
+            <div class="cart-controls">
+
+                <button>−</button>
+                <span>1</span>
+                <button>+</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section">
+        <div class="section-title">
+            <h3>＋ Add more items</h3>
+        </div>
+    </div>
+
+
+    <div class="summary">
+
+        <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="subtotal">Rs. 1,880</span>
+        </div>
+
+        <div class="summary-row">
+            <span>Delivery Fee</span>
+            <span>Rs. 100</span>
+        </div>
+
+        <div class="summary-row total">
+            <span>Total</span>
+            <span id="total">Rs. 1,980</span>
+        </div>
+
+    </div>
+
+
+    <button class="btn btn-primary checkout-btn"
+            onclick="openCheckout()">
+        Proceed to Checkout
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     ORDERS
+===================================================== -->
+<section id="orders" class="screen">
+
+    <div class="page-header">
+        <h2>My Orders</h2>
+    </div>
+
+
+    <div class="order-tabs">
+
+        <div class="order-tab active">
+            Current
+        </div>
+
+        <div class="order-tab">
+            Past
+        </div>
+
+    </div>
+
+
+    <div class="order-card"
+         onclick="showScreen('tracking')">
+
+        <div class="order-image">
+            🍕
+        </div>
+
+        <div class="order-content">
+
+            <h4>The Pizza House</h4>
+
+            <p>
+                Margherita Pizza + 1 more
+            </p>
+
+            <strong>
+                Rs. 1,980
+            </strong>
+
+            <div class="delivered">
+                ✓ Delivered
+            </div>
+
+            <small>
+                25 Apr 2025 · 7:15 PM
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="order-card">
+
+        <div class="order-image">
+            🍛
+        </div>
+
+        <div class="order-content">
+
+            <h4>Biryani Factory</h4>
+
+            <p>
+                Chicken Biryani + Raita
+            </p>
+
+            <strong>
+                Rs. 1,250
+            </strong>
+
+            <div class="delivered">
+                ✓ Delivered
+            </div>
+
+            <small>
+                20 Apr 2025 · 6:32 PM
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="order-card">
+
+        <div class="order-image">
+            🍔
+        </div>
+
+        <div class="order-content">
+
+            <h4>Burger Point</h4>
+
+            <p>
+                Zinger Burger + Fries
+            </p>
+
+            <strong>
+                Rs. 890
+            </strong>
+
+            <div class="delivered">
+                ✓ Delivered
+            </div>
+
+            <small>
+                15 Apr 2025 · 8:10 PM
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="order-card">
+
+        <div class="order-image">
+            🍝
+        </div>
+
+        <div class="order-content">
+
+            <h4>The Pasta Corner</h4>
+
+            <p>
+                Alfredo Pasta
+            </p>
+
+            <strong>
+                Rs. 1,120
+            </strong>
+
+            <div class="delivered">
+                ✓ Delivered
+            </div>
+
+            <small>
+                10 Apr 2025 · 7:45 PM
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TRACKING
+===================================================== -->
+<section id="tracking" class="screen">
+
+    <div class="page-header">
+
+        <div class="back"
+             onclick="showScreen('orders')">
+            ←
+        </div>
+
+        <h2>Track Order</h2>
+
+    </div>
+
+
+    <div class="map">
+
+        <div class="road"></div>
+
+        <div class="pin restaurant">
+            📍
+        </div>
+
+        <div class="pin customer">
+            📍
+        </div>
+
+    </div>
+
+
+    <div class="driver-card">
+
+        <div class="driver-row">
+
+            <div class="driver-avatar">
+                👨
+            </div>
+
+            <div class="driver-info">
+
+                <h4>Ali Raza</h4>
+
+                <p>Your delivery partner</p>
+
+                <span class="rating">
+                    ★ 4.8 (312)
+                </span>
+
+            </div>
+
+            <div class="driver-actions">
+                <button>☎</button>
+                <button>💬</button>
+            </div>
+
+        </div>
+
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            margin-top:18px;
+            font-size:10px;
+        ">
+            <span>Order #348729</span>
+            <span style="color:#e65322;font-weight:bold;">
+                Arriving in 12 min
+            </span>
+        </div>
+
+
+        <div class="progress">
+
+            <div class="progress-step done">
+
+                <div class="progress-dot"></div>
+
+                Placed
+
+            </div>
+
+            <div class="progress-step done">
+
+                <div class="progress-dot"></div>
+
+                Preparing
+
+            </div>
+
+            <div class="progress-step active">
+
+                <div class="progress-dot"></div>
+
+                Out for<br>Delivery
+
+            </div>
+
+            <div class="progress-step">
+
+                <div class="progress-dot"></div>
+
+                Delivered
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FAVORITES
+===================================================== -->
+<section id="favorites" class="screen">
+
+    <div class="page-header">
+        <h2>Favorites</h2>
+    </div>
+
+
+    <div class="order-tabs">
+
+        <div class="order-tab active">
+            Restaurants
+        </div>
+
+        <div class="order-tab">
+            Dishes
+        </div>
+
+    </div>
+
+
+    <div class="favorite-card">
+
+        <div class="favorite-image">
+            🍕
+        </div>
+
+        <div class="favorite-info">
+
+            <h4>The Pizza House</h4>
+
+            <p>
+                ⭐ 4.5 (1.2k)
+            </p>
+
+            <p>
+                Italian · Pizza · Fast Food
+            </p>
+
+        </div>
+
+        <div class="favorite-heart">
+            ♥
+        </div>
+
+    </div>
+
+
+    <div class="favorite-card">
+
+        <div class="favorite-image">
+            🍛
+        </div>
+
+        <div class="favorite-info">
+
+            <h4>Biryani Factory</h4>
+
+            <p>
+                ⭐ 4.6 (842)
+            </p>
+
+            <p>
+                Desi · Biryani · Pakistani
+            </p>
+
+        </div>
+
+        <div class="favorite-heart">
+            ♥
+        </div>
+
+    </div>
+
+
+    <div class="favorite-card">
+
+        <div class="favorite-image">
+            🍔
+        </div>
+
+        <div class="favorite-info">
+
+            <h4>Burger Point</h4>
+
+            <p>
+                ⭐ 4.4 (628)
+            </p>
+
+            <p>
+                Burgers · Fast Food
+            </p>
+
+        </div>
+
+        <div class="favorite-heart">
+            ♥
+        </div>
+
+    </div>
+
+
+    <div class="favorite-card">
+
+        <div class="favorite-image">
+            🍝
+        </div>
+
+        <div class="favorite-info">
+
+            <h4>Pasta Corner</h4>
+
+            <p>
+                ⭐ 4.3 (512)
+            </p>
+
+            <p>
+                Italian · Pasta
+            </p>
+
+        </div>
+
+        <div class="favorite-heart">
+            ♥
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+<section id="profile" class="screen">
+
+    <div class="page-header">
+        <h2>Profile</h2>
+    </div>
+
+
+    <div class="profile-top">
+
+        <div class="profile-avatar">
+            👩
+        </div>
+
+        <h2>Ayesha Khan</h2>
+
+        <p>
+            ayesha.khan@gmail.com
+        </p>
+
+        <button class="edit-btn">
+            ✎ Edit Profile
+        </button>
+
+    </div>
+
+
+    <div class="profile-stats">
+
+        <div class="stat">
+            <strong>12</strong>
+            <span>Orders</span>
+        </div>
+
+        <div class="stat">
+            <strong>5</strong>
+            <span>Favorites</span>
+        </div>
+
+        <div class="stat">
+            <strong>2</strong>
+            <span>Reviews</span>
+        </div>
+
+    </div>
+
+
+    <div class="profile-menu">
+
+        <div class="profile-menu-item">
+            <span>⌖</span>
+            My Addresses
+            <span>›</span>
+        </div>
+
+        <div class="profile-menu-item">
+            <span>▣</span>
+            Payment Methods
+            <span>›</span>
+        </div>
+
+        <div class="profile-menu-item">
+            <span>♧</span>
+            Notifications
+            <span>›</span>
+        </div>
+
+        <div class="profile-menu-item">
+            <span>?</span>
+            Help & Support
+            <span>›</span>
+        </div>
+
+        <div class="profile-menu-item">
+            <span>⚙</span>
+            Settings
+            <span>›</span>
+        </div>
+
+    </div>
+
+
+    <button class="btn logout"
+            onclick="showScreen('splash')">
+        Log Out
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     BOTTOM NAVIGATION
+===================================================== -->
+<nav class="bottom-nav" id="bottomNav">
+
+    <div class="nav-item active"
+         data-screen="home"
+         onclick="showScreen('home')">
+
+        <div class="nav-icon">⌂</div>
+        Home
+
+    </div>
+
+
+    <div class="nav-item"
+         data-screen="home"
+         onclick="focusSearch()">
+
+        <div class="nav-icon">⌕</div>
+        Search
+
+    </div>
+
+
+    <div class="nav-item"
+         data-screen="orders"
+         onclick="showScreen('orders')">
+
+        <div class="nav-icon">▣</div>
+        Orders
+
+    </div>
+
+
+    <div class="nav-item"
+         data-screen="favorites"
+         onclick="showScreen('favorites')">
+
+        <div class="nav-icon">♡</div>
+        Favorites
+
+    </div>
+
+
+    <div class="nav-item"
+         data-screen="profile"
+         onclick="showScreen('profile')">
+
+        <div class="nav-icon">♙</div>
+        Profile
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+<div class="toast" id="toast">
+    Added to cart
+</div>
+
+
+<!-- =====================================================
+     CHECKOUT MODAL
+===================================================== -->
+<div class="modal" id="checkoutModal">
+
+    <div class="modal-content">
+
+        <h2>Checkout</h2>
+
+        <div class="address-box">
+            📍 <strong>Home</strong><br>
+            123 Main Street, Lahore, Pakistan
+        </div>
+
+        <div class="payment">
+            <span>💳 Payment</span>
+            <strong>Cash on Delivery ›</strong>
+        </div>
+
+        <div class="payment">
+            <span>Delivery</span>
+            <strong>Rs. 100</strong>
+        </div>
+
+        <div class="payment">
+            <strong>Total</strong>
+            <strong>Rs. 1,980</strong>
+        </div>
+
+        <button class="btn btn-primary"
+                style="margin-top:18px;"
+                onclick="placeOrder()">
+            Place Order
+        </button>
+
+        <button class="btn"
+                style="background:#eee;margin-top:8px;"
+                onclick="closeCheckout()">
+            Cancel
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentProduct = {
+    name: "Margherita Pizza",
+    price: 950,
+    emoji: "🍕"
+};
+
+let productBasePrice = 950;
+let productExtras = 0;
+let productQty = 1;
+
+let cartQty = 1;
+
+
+/* =========================================================
+   SCREEN NAVIGATION
+========================================================= */
+
+function showScreen(screenId) {
+
+    document.querySelectorAll(".screen")
+        .forEach(screen => {
+            screen.classList.remove("active");
+        });
+
+    const target = document.getElementById(screenId);
+
+    if (target) {
+        target.classList.add("active");
+    }
+
+    updateNavigation(screenId);
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+function updateNavigation(screenId) {
+
+    document.querySelectorAll(".nav-item")
+        .forEach(item => {
+            item.classList.remove("active");
+        });
+
+    const nav = document.querySelector(
+        `.nav-item[data-screen="${screenId}"]`
+    );
+
+    if (nav) {
+        nav.classList.add("active");
+    }
+
+    const bottomNav = document.getElementById("bottomNav");
+
+    if (
+        screenId === "splash" ||
+        screenId === "restaurant" ||
+        screenId === "product" ||
+        screenId === "tracking"
+    ) {
+        bottomNav.style.display = "none";
+    } else {
+        bottomNav.style.display = "flex";
+    }
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function focusSearch() {
+
+    showScreen("home");
+
+    setTimeout(() => {
+
+        const input =
+            document.getElementById("searchInput");
+
+        input.focus();
+
+    }, 300);
+}
+
+
+function searchFood() {
+
+    const query =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const cards =
+        document.querySelectorAll(".restaurant-card");
+
+    cards.forEach(card => {
+
+        const name =
+            card.dataset.name.toLowerCase();
+
+        if (!query || name.includes(query)) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+
+    });
+}
+
+
+function filterCategory(category) {
+
+    showToast(category + " selected");
+
+    if (category === "Pizza") {
+        showScreen("restaurant");
+    }
+}
+
+
+/* =========================================================
+   RESTAURANT
+========================================================= */
+
+function toggleFavoriteRestaurant(button) {
+
+    if (button.textContent.trim() === "♡") {
+        button.textContent = "♥";
+        button.style.color = "#ef4444";
+        showToast("Added to favorites");
+    } else {
+        button.textContent = "♡";
+        button.style.color = "";
+        showToast("Removed from favorites");
+    }
+}
+
+
+function toggleHeart(event, button) {
+
+    event.stopPropagation();
+
+    button.classList.toggle("active");
+
+    if (button.classList.contains("active")) {
+        button.textContent = "♥";
+        showToast("Added to favorites");
+    } else {
+        button.textContent = "♡";
+    }
+}
+
+
+/* =========================================================
+   PRODUCT
+========================================================= */
+
+function showProduct(name, price, emoji) {
+
+    currentProduct = {
+        name,
+        price,
+        emoji
+    };
+
+    productBasePrice = price;
+    productExtras = 0;
+    productQty = 1;
+
+    document.getElementById("productName")
+        .textContent = name;
+
+    document.getElementById("productPrice")
+        .textContent = "Rs. " + price.toLocaleString();
+
+    document.getElementById("productEmoji")
+        .textContent = emoji;
+
+    document.getElementById("productQty")
+        .textContent = "1";
+
+    document.querySelectorAll(
+        '#product input[type="checkbox"]'
+    ).forEach(input => {
+        input.checked = false;
+    });
+
+    document.querySelectorAll(".size")
+        .forEach(size => {
+            size.classList.remove("active");
+        });
+
+    document.querySelector(".size:nth-child(2)")
+        .classList.add("active");
+
+    updateProductPrice();
+
+    showScreen("product");
+}
+
+
+function selectSize(element, price) {
+
+    document.querySelectorAll(".size")
+        .forEach(size => {
+            size.classList.remove("active");
+        });
+
+    element.classList.add("active");
+
+    productBasePrice = price;
+
+    updateProductPrice();
+}
+
+
+function extraChanged(input, amount) {
+
+    if (input.checked) {
+        productExtras += amount;
+    } else {
+        productExtras -= amount;
+    }
+
+    updateProductPrice();
+}
+
+
+function updateProductPrice() {
+
+    const unitPrice =
+        productBasePrice + productExtras;
+
+    const total =
+        unitPrice * productQty;
+
+    document.getElementById("productPrice")
+        .textContent =
+        "Rs. " + unitPrice.toLocaleString();
+
+    document.getElementById("productButtonPrice")
+        .textContent =
+        "Rs. " + total.toLocaleString();
+}
+
+
+function changeProductQty(amount) {
+
+    productQty += amount;
+
+    if (productQty < 1) {
+        productQty = 1;
+    }
+
+    document.getElementById("productQty")
+        .textContent = productQty;
+
+    updateProductPrice();
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+function addQuickItem(name, price, emoji) {
+
+    cartQty++;
+
+    updateCart();
+
+    showToast(name + " added to cart");
+}
+
+
+function addProductToCart() {
+
+    const unitPrice =
+        productBasePrice + productExtras;
+
+    cartQty += productQty;
+
+    updateCart();
+
+    showToast(
+        currentProduct.name +
+        " added to cart"
+    );
+
+    setTimeout(() => {
+        showScreen("cart");
+    }, 500);
+}
+
+
+function changeCart(amount) {
+
+    cartQty += amount;
+
+    if (cartQty < 1) {
+        cartQty = 1;
+    }
+
+    updateCart();
+}
+
+
+function updateCart() {
+
+    document.getElementById("cartQty")
+        .textContent = cartQty;
+
+    const pizzaTotal =
+        950 * cartQty;
+
+    const subtotal =
+        pizzaTotal + 780 + 150;
+
+    const total =
+        subtotal + 100;
+
+    document.getElementById("subtotal")
+        .textContent =
+        "Rs. " + subtotal.toLocaleString();
+
+    document.getElementById("total")
+        .textContent =
+        "Rs. " + total.toLocaleString();
+}
+
+
+/* =========================================================
+   CHECKOUT
+========================================================= */
+
+function openCheckout() {
+
+    document.getElementById("checkoutModal")
+        .classList.add("show");
+}
+
+
+function closeCheckout() {
+
+    document.getElementById("checkoutModal")
+        .classList.remove("show");
+}
+
+
+function placeOrder() {
+
+    closeCheckout();
+
+    showToast("Order placed successfully!");
+
+    setTimeout(() => {
+
+        showScreen("tracking");
+
+    }, 700);
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 1800);
+}
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    updateNavigation("splash");
+
+    /*
+       Make menu category buttons interactive
+    */
+
+    document.querySelectorAll(".menu-cat")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                document.querySelectorAll(".menu-cat")
+                    .forEach(item => {
+                        item.classList.remove("active");
+                    });
+
+                button.classList.add("active");
+
+            });
+
+        });
+
+
+    /*
+       Make order tabs interactive
+    */
+
+    document.querySelectorAll(".order-tabs")
+        .forEach(container => {
+
+            container.querySelectorAll(".order-tab")
+                .forEach(tab => {
+
+                    tab.addEventListener("click", () => {
+
+                        container
+                            .querySelectorAll(".order-tab")
+                            .forEach(item => {
+                                item.classList.remove("active");
+                            });
+
+                        tab.classList.add("active");
+
+                    });
+
+                });
+
+        });
+
+});
+</script>
+
+</body>
+</html>

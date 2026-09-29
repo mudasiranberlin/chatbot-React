@@ -1,0 +1,2210 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --orange: #f45120;
+  --orange-dark: #df3e10;
+  --orange-light: #fff0e9;
+
+  --cream: #faf8f5;
+  --white: #fff;
+
+  --black: #171717;
+  --gray: #777;
+
+  --border: #e9e9e9;
+
+  --green: #38a169;
+  --red: #ef4444;
+
+  --shadow:
+    0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+html {
+  background: #ddd;
+}
+
+body {
+  margin: 0;
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
+  background: #ddd;
+
+  color: var(--black);
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  width: 100%;
+  max-width: 430px;
+
+  min-height: 100vh;
+
+  margin: auto;
+
+  background: var(--cream);
+
+  position: relative;
+
+  overflow-x: hidden;
+}
+
+.screen {
+  min-height: 100vh;
+
+  padding-bottom: 90px;
+}
+
+.active {
+  display: block;
+}
+
+/* =========================================================
+   SPLASH
+========================================================= */
+
+.splash {
+  min-height: 100vh;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: flex-end;
+
+  padding:
+    30px
+    24px
+    38px;
+
+  overflow: hidden;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.1),
+      rgba(0, 0, 0, 0.85)
+    ),
+    linear-gradient(
+      135deg,
+      #4d2b17,
+      #9b4d1d 45%,
+      #26170f
+    );
+}
+
+.food-hero {
+  position: absolute;
+
+  top: 120px;
+
+  left: 30px;
+  right: 30px;
+
+  height: 360px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      #ffbd55 0 10%,
+      transparent 11%
+    ),
+    radial-gradient(
+      circle at 30% 55%,
+      #e44720 0 7%,
+      transparent 8%
+    ),
+    radial-gradient(
+      circle at 70% 60%,
+      #e44720 0 7%,
+      transparent 8%
+    ),
+    radial-gradient(
+      circle at 45% 75%,
+      #56a33a 0 6%,
+      transparent 7%
+    ),
+    radial-gradient(
+      circle at 65% 35%,
+      #3c8e34 0 5%,
+      transparent 6%
+    ),
+    linear-gradient(
+      145deg,
+      #d86b22,
+      #8d3517
+    );
+
+  box-shadow:
+    inset 0 -40px 70px
+      rgba(0, 0, 0, 0.35),
+    0 25px 60px
+      rgba(0, 0, 0, 0.35);
+
+  transform: rotate(-5deg);
+}
+
+.hero-food {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-12deg);
+
+  font-size: 170px;
+
+  filter:
+    drop-shadow(
+      0 18px 15px
+      rgba(0, 0, 0, 0.3)
+    );
+}
+
+.splash-content {
+  position: relative;
+
+  z-index: 2;
+}
+
+.logo-chef {
+  font-size: 45px;
+
+  text-align: center;
+}
+
+.splash-logo {
+  font-size: 48px;
+
+  font-weight: 300;
+
+  font-family: cursive;
+
+  text-align: center;
+}
+
+.tagline {
+  text-align: center;
+
+  font-size: 13px;
+
+  margin-bottom: 35px;
+
+  opacity: 0.9;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn {
+  width: 100%;
+
+  border: none;
+
+  border-radius: 30px;
+
+  padding: 16px 20px;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  transition: 0.2s;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  color: white;
+
+  background:
+    var(--orange);
+}
+
+.btn-primary:hover {
+  background:
+    var(--orange-dark);
+}
+
+.btn-outline {
+  color: white;
+
+  background: transparent;
+
+  border: 1px solid white;
+
+  margin-top: 12px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+  padding:
+    48px
+    20px
+    15px;
+}
+
+.header-row {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+.location {
+  font-size: 13px;
+
+  color: var(--gray);
+}
+
+.location strong {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--black);
+
+  font-size: 14px;
+}
+
+.header-icon {
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  border: 1px solid
+    var(--border);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: white;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-box {
+  height: 48px;
+
+  background: white;
+
+  border: 1px solid
+    var(--border);
+
+  border-radius: 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0 15px;
+
+  margin-top: 16px;
+
+  gap: 10px;
+}
+
+.search-box input {
+  border: none;
+
+  outline: none;
+
+  flex: 1;
+
+  font-size: 14px;
+
+  background:
+    transparent;
+}
+
+/* =========================================================
+   BANNER
+========================================================= */
+
+.banner {
+  margin:
+    8px
+    20px
+    20px;
+
+  min-height: 135px;
+
+  border-radius: 18px;
+
+  padding: 20px;
+
+  color: white;
+
+  overflow: hidden;
+
+  position: relative;
+
+  background:
+    linear-gradient(
+      100deg,
+      rgba(30, 20, 15, 0.95),
+      rgba(50, 30, 15, 0.45)
+    ),
+    linear-gradient(
+      135deg,
+      #8a3f18,
+      #d96a1b
+    );
+}
+
+.banner h2 {
+  width: 55%;
+
+  font-size: 19px;
+
+  line-height: 1.2;
+}
+
+.banner p {
+  width: 55%;
+
+  font-size: 11px;
+
+  opacity: 0.8;
+
+  margin-top: 6px;
+}
+
+.banner button {
+  background:
+    var(--orange);
+
+  color: white;
+
+  border: none;
+
+  padding: 9px 15px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+
+  margin-top: 12px;
+}
+
+.banner-food {
+  position: absolute;
+
+  right: -15px;
+
+  top: 15px;
+
+  font-size: 100px;
+
+  transform: rotate(-10deg);
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section {
+  padding: 0 20px;
+}
+
+.section-title {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin:
+    20px 0
+    13px;
+}
+
+.section-title h3 {
+  font-size: 17px;
+}
+
+.section-title span {
+  color: var(--orange);
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
+.categories {
+  display: flex;
+
+  gap: 13px;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
+}
+
+.category {
+  min-width: 65px;
+
+  border: none;
+
+  background:
+    transparent;
+
+  text-align: center;
+}
+
+.category-icon {
+  width: 52px;
+  height: 52px;
+
+  border-radius: 50%;
+
+  background:
+    #fff3ec;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin: auto;
+
+  font-size: 25px;
+}
+
+.category span {
+  display: block;
+
+  font-size: 10px;
+
+  margin-top: 6px;
+
+  color: #555;
+}
+
+/* =========================================================
+   RESTAURANTS
+========================================================= */
+
+.restaurant-grid {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 10px;
+}
+
+.restaurant-card {
+  background: white;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    var(--border);
+
+  cursor: pointer;
+}
+
+.food-image {
+  height: 105px;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.food-image.orange {
+  background:
+    linear-gradient(
+      135deg,
+      #a8491e,
+      #ef8b31
+    );
+}
+
+.food-image.green {
+  background:
+    linear-gradient(
+      135deg,
+      #345d2b,
+      #88ad3d
+    );
+}
+
+.food-image.red {
+  background:
+    linear-gradient(
+      135deg,
+      #682216,
+      #df5728
+    );
+}
+
+.food-image.yellow {
+  background:
+    linear-gradient(
+      135deg,
+      #7a501b,
+      #e6a83e
+    );
+}
+
+.food-emoji {
+  font-size: 75px;
+
+  filter:
+    drop-shadow(
+      0 8px 8px
+      rgba(0, 0, 0, 0.3)
+    );
+}
+
+.heart {
+  position: absolute;
+
+  right: 8px;
+  top: 8px;
+
+  width: 27px;
+  height: 27px;
+
+  border-radius: 50%;
+
+  border: none;
+
+  background: white;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #aaa;
+
+  cursor: pointer;
+
+  z-index: 2;
+}
+
+.heart.active {
+  color:
+    var(--red);
+}
+
+.restaurant-info {
+  padding: 10px;
+}
+
+.restaurant-info h4 {
+  font-size: 12px;
+
+  margin-bottom: 4px;
+}
+
+.restaurant-meta {
+  font-size: 9px;
+
+  color: var(--gray);
+
+  margin-top: 2px;
+}
+
+.rating {
+  color:
+    #f5a623;
+}
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+.bottom-nav {
+  position: fixed;
+
+  bottom: 0;
+
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  width:
+    min(430px, 100%);
+
+  height: 70px;
+
+  background:
+    rgba(255,255,255,.97);
+
+  border-top:
+    1px solid
+    var(--border);
+
+  display: flex;
+
+  justify-content:
+    space-around;
+
+  align-items: center;
+
+  z-index: 100;
+}
+
+.nav-item {
+  border: none;
+
+  background:
+    transparent;
+
+  text-align: center;
+
+  font-size: 10px;
+
+  color: #999;
+
+  width: 20%;
+
+  position: relative;
+}
+
+.nav-icon {
+  position: relative;
+
+  font-size: 20px;
+
+  margin-bottom: 4px;
+}
+
+.nav-item.active {
+  color:
+    var(--orange);
+}
+
+.nav-badge {
+  position: absolute;
+
+  top: -8px;
+
+  right: 25px;
+
+  background:
+    var(--orange);
+
+  color: white;
+
+  width: 16px;
+  height: 16px;
+
+  border-radius: 50%;
+
+  font-size: 9px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+  padding:
+    45px
+    20px
+    15px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+.page-header h2 {
+  font-size: 20px;
+}
+
+.back {
+  border: none;
+
+  background:
+    transparent;
+
+  font-size: 25px;
+}
+
+/* =========================================================
+   RESTAURANT
+========================================================= */
+
+.restaurant-cover {
+  height: 205px;
+
+  position: relative;
+
+  background:
+    linear-gradient(
+      rgba(0,0,0,.15),
+      rgba(0,0,0,.4)
+    ),
+    linear-gradient(
+      135deg,
+      #51321e,
+      #bb6833
+    );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.restaurant-cover::before {
+  content: "🍕";
+
+  font-size: 170px;
+
+  filter:
+    drop-shadow(
+      0 20px 15px
+      rgba(0,0,0,.35)
+    );
+}
+
+.cover-actions {
+  position: absolute;
+
+  top: 48px;
+
+  left: 15px;
+  right: 15px;
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  z-index: 5;
+}
+
+.cover-actions button {
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  border: none;
+
+  background:
+    rgba(255,255,255,.95);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+}
+
+.favorite-button.active {
+  color:
+    var(--red);
+}
+
+.restaurant-title {
+  padding:
+    18px
+    20px
+    10px;
+
+  background:
+    white;
+}
+
+.restaurant-title h2 {
+  font-size: 20px;
+}
+
+.restaurant-details {
+  display: flex;
+
+  gap: 10px;
+
+  font-size: 11px;
+
+  color:
+    var(--gray);
+
+  margin-top: 8px;
+
+  flex-wrap: wrap;
+}
+
+.tabs {
+  display: flex;
+
+  gap: 22px;
+
+  padding:
+    15px
+    20px
+    5px;
+
+  background: white;
+
+  border-bottom:
+    1px solid
+    var(--border);
+}
+
+.tab {
+  font-size: 13px;
+
+  color: #888;
+
+  padding-bottom: 10px;
+}
+
+.tab.active {
+  color:
+    var(--orange);
+
+  border-bottom:
+    2px solid
+    var(--orange);
+}
+
+.menu-categories {
+  display: flex;
+
+  gap: 10px;
+
+  padding:
+    15px
+    20px;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+.menu-cat {
+  background:
+    white;
+
+  border:
+    1px solid
+    var(--border);
+
+  padding:
+    9px 17px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+}
+
+.menu-cat.active {
+  background:
+    var(--orange);
+
+  color:
+    white;
+
+  border-color:
+    var(--orange);
+}
+
+.menu-item {
+  background:
+    white;
+
+  margin:
+    8px 20px;
+
+  padding: 10px;
+
+  border-radius: 15px;
+
+  display: flex;
+
+  gap: 12px;
+
+  align-items: center;
+
+  border:
+    1px solid
+    var(--border);
+
+  cursor: pointer;
+}
+
+.menu-item-image {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #853d20,
+      #e98b36
+    );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 48px;
+
+  flex-shrink: 0;
+}
+
+.menu-item-content {
+  flex: 1;
+}
+
+.menu-item h4 {
+  font-size: 13px;
+}
+
+.menu-item p {
+  font-size: 10px;
+
+  color: #888;
+
+  margin:
+    4px 0;
+}
+
+.price {
+  font-weight: 700;
+
+  font-size: 12px;
+}
+
+.add-btn {
+  width: 29px;
+  height: 29px;
+
+  border-radius: 50%;
+
+  border: none;
+
+  background:
+    var(--orange);
+
+  color: white;
+
+  font-size: 18px;
+}
+
+/* =========================================================
+   PRODUCT
+========================================================= */
+
+.product-image {
+  height: 300px;
+
+  background:
+    radial-gradient(
+      circle,
+      #ed8c30,
+      #7b3319
+    );
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+.big-food {
+  font-size: 190px;
+
+  filter:
+    drop-shadow(
+      0 20px 20px
+      rgba(0,0,0,.35)
+    );
+}
+
+.product-info {
+  background:
+    white;
+
+  border-radius:
+    25px 25px 0 0;
+
+  margin-top: -25px;
+
+  position: relative;
+
+  padding:
+    22px
+    20px
+    100px;
+}
+
+.product-name-row {
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  gap: 10px;
+}
+
+.product-name-row h2 {
+  font-size: 21px;
+}
+
+.product-price {
+  color:
+    var(--orange);
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.description {
+  color: #777;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+
+  margin:
+    8px 0
+    18px;
+}
+
+.option-title {
+  font-size: 14px;
+
+  font-weight: 700;
+
+  margin:
+    16px 0
+    10px;
+}
+
+.size-options {
+  display: flex;
+
+  gap: 8px;
+}
+
+.size {
+  flex: 1;
+
+  border:
+    1px solid
+    var(--border);
+
+  padding:
+    12px 5px;
+
+  border-radius: 10px;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  font-size: 11px;
+
+  background:
+    white;
+}
+
+.size.active {
+  border-color:
+    var(--orange);
+
+  background:
+    #fff2ec;
+
+  color:
+    var(--orange);
+}
+
+.extra {
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  padding: 11px 0;
+
+  border-bottom:
+    1px solid #eee;
+
+  font-size: 12px;
+}
+
+.extra input {
+  accent-color:
+    var(--orange);
+
+  margin-right: 7px;
+}
+
+.product-bottom {
+  position: fixed;
+
+  bottom: 0;
+
+  width:
+    min(430px, 100%);
+
+  background:
+    white;
+
+  padding:
+    12px 20px;
+
+  display: flex;
+
+  gap: 10px;
+
+  z-index: 50;
+
+  border-top:
+    1px solid
+    var(--border);
+}
+
+.product-bottom .btn {
+  flex: 1;
+}
+
+.qty {
+  display: flex;
+
+  align-items: center;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.qty button {
+  border: none;
+
+  background: white;
+
+  width: 32px;
+
+  height: 42px;
+
+  font-size: 16px;
+}
+
+.qty span {
+  width: 28px;
+
+  text-align: center;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   CART
+========================================================= */
+
+.cart-list {
+  padding:
+    5px 20px;
+}
+
+.cart-item {
+  background:
+    white;
+
+  padding: 10px;
+
+  border-radius: 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 10px;
+
+  border:
+    1px solid
+    var(--border);
+}
+
+.cart-food {
+  width: 58px;
+  height: 58px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #833719,
+      #e37a2b
+    );
+
+  border-radius: 10px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 38px;
+}
+
+.cart-info {
+  flex: 1;
+}
+
+.cart-info h4 {
+  font-size: 12px;
+}
+
+.cart-info p {
+  font-size: 10px;
+
+  color: #888;
+
+  margin-top: 3px;
+}
+
+.cart-info strong {
+  font-size: 12px;
+}
+
+.summary {
+  margin:
+    20px;
+
+  background:
+    white;
+
+  border-radius: 15px;
+
+  padding:
+    15px;
+}
+
+.summary-row {
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  font-size: 12px;
+
+  padding:
+    8px 0;
+
+  color:
+    #777;
+}
+
+.summary-row.total {
+  color:
+    var(--black);
+
+  font-weight: 700;
+
+  font-size: 16px;
+
+  border-top:
+    1px solid
+    var(--border);
+
+  margin-top: 7px;
+
+  padding-top: 14px;
+}
+
+.checkout-btn {
+  margin:
+    0 20px;
+
+  width:
+    calc(100% - 40px);
+}
+
+/* =========================================================
+   ORDERS
+========================================================= */
+
+.order-tabs {
+  margin:
+    0 20px
+    15px;
+
+  display: flex;
+
+  background:
+    white;
+
+  border-radius: 22px;
+
+  padding: 4px;
+}
+
+.order-tab {
+  flex: 1;
+
+  text-align: center;
+
+  padding: 10px;
+
+  font-size: 11px;
+
+  border-radius: 18px;
+
+  border: none;
+
+  background:
+    transparent;
+}
+
+.order-tab.active {
+  background:
+    var(--orange);
+
+  color:
+    white;
+}
+
+.order-card {
+  margin:
+    10px 20px;
+
+  background:
+    white;
+
+  border-radius: 15px;
+
+  padding: 12px;
+
+  display: flex;
+
+  gap: 12px;
+
+  border:
+    1px solid
+    var(--border);
+
+  cursor: pointer;
+}
+
+.order-image {
+  width: 65px;
+  height: 65px;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #813b1e,
+      #e47e2c
+    );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 43px;
+}
+
+.order-content {
+  flex: 1;
+}
+
+.order-content h4 {
+  font-size: 12px;
+}
+
+.order-content p {
+  color:
+    #777;
+
+  font-size: 10px;
+
+  margin:
+    4px 0;
+}
+
+.order-content strong {
+  font-size: 12px;
+}
+
+.order-content small {
+  display: block;
+
+  color: #999;
+
+  margin-top: 4px;
+
+  font-size: 9px;
+}
+
+.delivered {
+  color:
+    var(--green);
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  margin-top: 3px;
+}
+
+/* =========================================================
+   TRACKING
+========================================================= */
+
+.map {
+  margin:
+    0 20px;
+
+  height: 310px;
+
+  border-radius: 18px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      25deg,
+      transparent 48%,
+      #fff 49%,
+      #fff 52%,
+      transparent 53%
+    ),
+    linear-gradient(
+      115deg,
+      transparent 48%,
+      #fff 49%,
+      #fff 52%,
+      transparent 53%
+    ),
+    #dbe8d3;
+
+  background-size:
+    90px 90px;
+}
+
+.road {
+  position: absolute;
+
+  width: 150%;
+
+  height: 28px;
+
+  background: #fff;
+
+  transform:
+    rotate(-30deg);
+
+  top: 130px;
+
+  left: -50px;
+}
+
+.pin {
+  position: absolute;
+
+  font-size: 35px;
+}
+
+.pin.restaurant {
+  top: 75px;
+
+  right: 75px;
+}
+
+.pin.customer {
+  bottom: 70px;
+
+  left: 70px;
+}
+
+.driver-map-icon {
+  position: absolute;
+
+  top: 45%;
+
+  left: 48%;
+
+  font-size: 35px;
+}
+
+.driver-card {
+  margin:
+    15px 20px;
+
+  background:
+    white;
+
+  border-radius: 15px;
+
+  padding: 14px;
+}
+
+.driver-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.driver-avatar {
+  width: 45px;
+  height: 45px;
+
+  border-radius: 50%;
+
+  background:
+    #c5a37d;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 25px;
+}
+
+.driver-info {
+  flex: 1;
+}
+
+.driver-info h4 {
+  font-size: 13px;
+}
+
+.driver-info p {
+  font-size: 10px;
+
+  color:
+    #777;
+}
+
+.driver-actions {
+  display: flex;
+
+  gap: 8px;
+}
+
+.driver-actions button {
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  border: none;
+
+  background:
+    #fff0e9;
+
+  color:
+    var(--orange);
+}
+
+.track-meta {
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  margin-top: 18px;
+
+  font-size: 10px;
+}
+
+.track-meta span:last-child {
+  color:
+    var(--orange);
+
+  font-weight: 700;
+}
+
+.progress {
+  margin-top: 20px;
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  position: relative;
+}
+
+.progress::before {
+  content: "";
+
+  position: absolute;
+
+  left: 8%;
+  right: 8%;
+
+  top: 8px;
+
+  height: 3px;
+
+  background:
+    #ddd;
+}
+
+.progress-step {
+  width: 25%;
+
+  text-align: center;
+
+  position: relative;
+
+  font-size: 8px;
+
+  color:
+    #888;
+}
+
+.progress-dot {
+  width: 18px;
+  height: 18px;
+
+  border-radius: 50%;
+
+  background:
+    #ddd;
+
+  margin:
+    auto auto 6px;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+.progress-step.done .progress-dot,
+.progress-step.active .progress-dot {
+  background:
+    var(--orange);
+}
+
+.progress-step.done,
+.progress-step.active {
+  color:
+    var(--black);
+}
+
+/* =========================================================
+   FAVORITES
+========================================================= */
+
+.favorite-card {
+  margin:
+    10px 20px;
+
+  padding: 10px;
+
+  background:
+    white;
+
+  border-radius: 15px;
+
+  display: flex;
+
+  gap: 12px;
+
+  align-items: center;
+
+  border:
+    1px solid
+    var(--border);
+}
+
+.favorite-image {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7c391e,
+      #e58a36
+    );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 48px;
+}
+
+.favorite-info {
+  flex: 1;
+}
+
+.favorite-info h4 {
+  font-size: 13px;
+}
+
+.favorite-info p {
+  font-size: 10px;
+
+  color:
+    #777;
+
+  margin-top: 5px;
+}
+
+.favorite-heart {
+  border: none;
+
+  background:
+    transparent;
+
+  color:
+    var(--red);
+
+  font-size: 20px;
+}
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-top {
+  text-align: center;
+
+  padding:
+    25px 20px;
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+
+  margin: auto;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d99d75,
+      #8d553d
+    );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 55px;
+
+  border:
+    4px solid white;
+
+  box-shadow:
+    var(--shadow);
+}
+
+.profile-top h2 {
+  font-size: 18px;
+
+  margin-top: 10px;
+}
+
+.profile-top p {
+  color:
+    #888;
+
+  font-size: 11px;
+}
+
+.edit-btn {
+  border:
+    1px solid
+    var(--border);
+
+  background:
+    white;
+
+  border-radius: 18px;
+
+  padding:
+    7px 14px;
+
+  font-size: 10px;
+
+  margin-top: 8px;
+}
+
+.profile-stats {
+  background:
+    white;
+
+  display: flex;
+
+  margin:
+    0 20px
+    15px;
+
+  border-radius: 15px;
+
+  padding:
+    16px 5px;
+}
+
+.stat {
+  flex: 1;
+
+  text-align: center;
+
+  border-right:
+    1px solid
+    var(--border);
+}
+
+.stat:last-child {
+  border: none;
+}
+
+.stat strong {
+  display: block;
+
+  font-size: 16px;
+}
+
+.stat span {
+  font-size: 9px;
+
+  color:
+    #888;
+}
+
+.profile-menu {
+  margin:
+    0 20px;
+
+  background:
+    white;
+
+  border-radius: 15px;
+
+  overflow: hidden;
+}
+
+.profile-menu-item {
+  width: 100%;
+
+  padding: 16px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  border: none;
+
+  border-bottom:
+    1px solid
+    var(--border);
+
+  background:
+    white;
+
+  font-size: 12px;
+
+  text-align: left;
+}
+
+.profile-menu-item:last-child {
+  border: none;
+}
+
+.profile-menu-item span:first-child {
+  width: 25px;
+
+  color:
+    var(--orange);
+}
+
+.profile-menu-item span:last-child {
+  margin-left: auto;
+
+  color:
+    #aaa;
+}
+
+.logout {
+  margin:
+    20px;
+
+  width:
+    calc(100% - 40px);
+
+  background:
+    white;
+
+  color:
+    var(--orange);
+
+  border:
+    1px solid
+    var(--orange);
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty-state {
+  text-align: center;
+
+  padding:
+    70px 20px;
+
+  color:
+    #777;
+}
+
+.empty-state div {
+  font-size: 55px;
+
+  margin-bottom: 10px;
+}
+
+.empty-state h3 {
+  color:
+    var(--black);
+
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  font-size: 12px;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast {
+  position: fixed;
+
+  bottom: 90px;
+
+  left: 50%;
+
+  transform:
+    translate(-50%, 20px);
+
+  background:
+    #222;
+
+  color:
+    white;
+
+  padding:
+    12px 18px;
+
+  border-radius: 25px;
+
+  font-size: 12px;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    0.3s;
+
+  z-index: 999;
+}
+
+.toast.show {
+  opacity: 1;
+
+  transform:
+    translate(-50%, 0);
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal {
+  position: fixed;
+
+  inset: 0;
+
+  background:
+    rgba(0,0,0,.5);
+
+  display: flex;
+
+  align-items:
+    flex-end;
+
+  z-index: 500;
+}
+
+.modal-content {
+  background:
+    white;
+
+  width:
+    min(430px,100%);
+
+  margin:
+    auto auto 0;
+
+  border-radius:
+    25px 25px 0 0;
+
+  padding:
+    25px 20px;
+}
+
+.modal-content h2 {
+  font-size: 20px;
+
+  margin-bottom: 20px;
+}
+
+.address-box {
+  background:
+    #fafafa;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius: 12px;
+
+  padding: 13px;
+
+  font-size: 12px;
+
+  margin-bottom: 10px;
+}
+
+.payment {
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  padding:
+    15px 0;
+
+  border-bottom:
+    1px solid
+    var(--border);
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   MOBILE / DESKTOP
+========================================================= */
+
+@media (min-width: 600px) {
+  body {
+    padding: 25px;
+  }
+
+  .app {
+    min-height: 850px;
+
+    border-radius: 28px;
+
+    box-shadow:
+      0 20px 70px
+      rgba(0,0,0,.2);
+  }
+
+  .bottom-nav {
+    border-radius:
+      0 0 28px 28px;
+  }
+}
