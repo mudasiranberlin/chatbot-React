@@ -50,15 +50,59 @@
             )
         }
 
+        function ChatMessages() {
+            const chatMessages= [
+                {
+                    id:"id1",
+                    sender:'user',
+                    message:"Hello chatbot"
+                },
+                {
+                    id:"id2",
+                    sender:'robot',
+                    message:"Hello! How can I help you?"
+                },
+                {
+                    id:"id3",
+                    sender:'user',
+                    message:"can you give me todays date"
+                },
+                {
+                    id:"id4",
+                    sender:'robot',
+                    message:"Today is September 28"
+                },
+            ];
+
+            function sendMessage() {
+                console.log("Message recived");
+                
+            }
+
+            return(
+                <>
+               <button onClick={sendMessage} >Send message</button>
+                {chatMessages.map((chatMessage)=>{
+                return(
+                    <Chatmessage message={chatMessage.message} sender={chatMessage.sender} key={chatMessage.id}/>
+                )
+
+            })}
+
+                </>
+            )
+        }
+
+        
+
         function App() {
-            const chatMessages= [];
+            
+        
             return(
                 <>
                 <ChatbotInput />
-                <Chatmessage message="Hello chatbot" sender="user" />
-                <Chatmessage message="Hello! How can I help you?" sender="robot" />
-                <Chatmessage message="can you give me todays date" sender="user" />
-                <Chatmessage message="Today is September 28" sender="robot" />
+                <ChatMessages/>
+               
             </>
 
             )
